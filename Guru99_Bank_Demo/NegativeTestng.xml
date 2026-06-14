@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM
+"https://testng.org/testng-1.0.dtd">
+
+<suite name="Guru99NegativeSuite">
+
+    <listeners>
+
+        <listener class-name="Listeners.TestListener"/>
+
+    </listeners>
+
+    <test name="Negative Tests">
+
+        <classes>
+
+            <class name="TestCases.LoginTest">
+                <methods>
+                    <include name="invalidLoginTest"/>
+                    <include name="emptyLoginTest"/>
+                </methods>
+            </class>
+
+            <class name="TestCases.FundTransferNegativeTest"/>
+
+        </classes>
+
+    </test>
+
+</suite>

@@ -1,0 +1,96 @@
+pipeline {
+	
+agent any
+
+tools {
+    maven 'Maven3'
+    jdk 'JDK 21'
+}
+
+stages {
+
+    stage('Checkout Code') {
+
+        steps {
+
+            git branch: 'master',
+                url: 'https://github.com/ShivDayalSingh02/Wipro_SDET_Capstone_Project.git'
+        }
+    }
+
+    stage('Build Project') {
+
+        steps {
+
+            dir('Guru99_Bank_Demo') {
+
+                bat 'mvn clean compile'
+            }
+        }
+    }
+
+    stage('Build Docker Image') {
+
+        steps {
+
+            dir('Guru99_Bank_Demo') {
+
+                bat 'docker build -t guru99-bank .'
+            }
+        }
+    }
+
+    stage('Run Tests in Docker') {
+
+        steps {
+
+            dir('Guru99_Bank_Demo') {
+
+                bat 'docker run --rm guru99-bank'
+            }
+        }
+    }
+
+    stage('Publish Test Results') {
+
+        steps {
+
+            junit allowEmptyResults: true,
+                  testResults: 'Guru99_Bank_Demo/target/surefire-reports/*.xml'
+        }
+    }
+}
+
+post {
+
+    always {
+
+        archiveArtifacts(
+            artifacts: 'Guru99_Bank_Demo/screenshots/*.png',
+            allowEmptyArchive: true
+        )
+
+        archiveArtifacts(
+            artifacts: 'Guru99_Bank_Demo/logs/*.log',
+            allowEmptyArchive: true
+        )
+
+        archiveArtifacts(
+            artifacts: 'Guru99_Bank_Demo/ExtentReports/*.html',
+            allowEmptyArchive: true
+        )
+
+        echo 'Execution Completed'
+    }
+
+    success {
+
+        echo 'Guru99 Bank Automation + Docker Execution Successful'
+    }
+
+    failure {
+
+        echo 'Guru99 Bank Automation + Docker Execution Failed'
+    }
+}
+}

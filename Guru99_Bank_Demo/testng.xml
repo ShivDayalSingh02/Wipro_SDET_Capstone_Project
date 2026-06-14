@@ -1,0 +1,41 @@
+<!DOCTYPE suite SYSTEM
+"https://testng.org/testng-1.0.dtd">
+
+<suite name="Guru99BankSuite">
+
+    <listeners>
+
+        <listener class-name=
+        "Listeners.TestListener"/>
+
+    </listeners>
+
+    <test name="Guru99 Tests">
+
+        <classes>
+
+            <class name="TestCases.LoginTest"/>
+
+            <!-- Customer Module -->
+            <class name="TestCases.CustomerTest"/>
+            <class name="TestCases.CustomerValidationTest"/>
+
+            <!-- Account Module -->
+            <class name="TestCases.AccountTest"/>
+            <class name="TestCases.AccountDetailsTest"/>
+
+            <!-- Transaction Module -->
+            <class name="TestCases.DepositTest"/>
+            <class name="TestCases.WithdrawalTest"/>
+
+            <!-- Fund Transfer Module -->
+            <class name="TestCases.FundTransferTest"/>
+
+            <!-- Negative Test Scenarios -->
+            <class name="TestCases.InvalidAccountTest"/>
+            <class name="TestCases.InsufficientBalanceTest"/>
+        </classes>
+
+    </test>
+
+</suite>
